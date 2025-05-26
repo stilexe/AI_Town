@@ -11,7 +11,9 @@ GameObject:
   - component: {fileID: 1627437448037450120}
   - component: {fileID: 5266784782622427296}
   - component: {fileID: 6090200102540303136}
-  m_Layer: 0
+  - component: {fileID: 2533965731401101701}
+  - component: {fileID: 3204662889265200495}
+  m_Layer: 9
   m_Name: GenericAIPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -84,6 +86,39 @@ CapsuleCollider:
   m_Height: 1.9051266
   m_Direction: 1
   m_Center: {x: 0, y: 0.8906398, z: 0}
+--- !u!114 &2533965731401101701
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5120811348706434879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75eea7d199ac93c44984d514a59e1a9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rb: {fileID: 5266784782622427296}
+  speed: {x: 0, y: 0, z: 10}
+--- !u!114 &3204662889265200495
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5120811348706434879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e95e9d5675be7e409894090559f64b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rb: {fileID: 5266784782622427296}
+  observableMask:
+    serializedVersion: 2
+    m_Bits: 832
+  avoidRange: 3
+  turnRange: 5
+  noOfRays: 1
 --- !u!1001 &6813437141405061915
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -95,6 +130,10 @@ PrefabInstance:
     - target: {fileID: 1645872946987862, guid: 9b88eb630e9e15a4f950eae741685374, type: 3}
       propertyPath: m_Name
       value: SM_Bean_Town_Female_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 1645872946987862, guid: 9b88eb630e9e15a4f950eae741685374, type: 3}
+      propertyPath: m_Layer
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 4182031405557140, guid: 9b88eb630e9e15a4f950eae741685374, type: 3}
       propertyPath: m_LocalPosition.x
