@@ -43,7 +43,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8041114919820574600}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 45b6be048dc8de04b92224d12a7c760a, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -55,10 +55,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.72507554
-  m_Height: 2.0884542
+  m_Radius: 0.9909326
+  m_Height: 2.6250172
   m_Direction: 1
-  m_Center: {x: 0.13074756, y: 0.82844496, z: 0.42271477}
+  m_Center: {x: 0.17643428, y: 1.0967264, z: 0.4227147}
 --- !u!54 &7585120321541361868
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -116,9 +116,10 @@ MonoBehaviour:
   observableMask:
     serializedVersion: 2
     m_Bits: 576
-  avoidRange: 3
-  turnRange: 5
-  noOfRays: 1
+  avoidRange: 8
+  turnRange: 1
+  fieldOfView: 110
+  maxRays: 8
 --- !u!1001 &7153746670147912255
 PrefabInstance:
   m_ObjectHideFlags: 0
