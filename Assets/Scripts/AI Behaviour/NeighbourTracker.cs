@@ -18,9 +18,14 @@ public class NeighbourTracker : MonoBehaviour
     [SerializeField] private bool align;
     [SerializeField] private float alignForce;
     private Vector3 _alignDirection;
+    
     [SerializeField] private bool separate;
     [SerializeField] private float separateForce;
     private Vector3 _separateDirection;
+    
+    [SerializeField] private bool cohesion;
+    [SerializeField] private float cohesionForce;
+    private Vector3 _cohesionDirection;
 
     private void Start()
     {
@@ -45,6 +50,7 @@ public class NeighbourTracker : MonoBehaviour
         //todo: maybe neaten all this up but for now seperate functions for each so its easier to know whats going on 
         if(align) Align(_neighbourColliders);
         if(separate) Separate(_neighbourColliders);
+        if(cohesion) Cohese(_neighbourColliders);
     }
 
     private void Align(Collider[] neighbours)
@@ -69,7 +75,8 @@ public class NeighbourTracker : MonoBehaviour
 
         foreach (Collider c in neighbours)
         {
-            _separateDirection += (c.transform.position - transform.position).normalized * ((searchRadius / 2) - Vector3.Distance(c.transform.position, transform.position));
+            //direction to each neighbour times by 75% of the search radius take the distance to the neighbour
+            _separateDirection += (c.transform.position - transform.position).normalized * ((searchRadius * .75f) - Vector3.Distance(c.transform.position, transform.position));
         }
         
         _separateDirection /= neighbours.Length;
@@ -79,19 +86,26 @@ public class NeighbourTracker : MonoBehaviour
         rb.AddForce(_separateDirection * separateForce);
     }
 
+    private void Cohese(Collider[] neighbours)
+    {
+        _cohesionDirection = Vector3.zero;
+
+        foreach (Collider c in neighbours)
+        {
+            _cohesionDirection += (c.transform.position - transform.position).normalized;
+        }
+        
+        _cohesionDirection /= neighbours.Length;
+        
+        Debug.DrawRay(transform.position + (Vector3.up * .5f), _cohesionDirection, Color.blue);
+        
+        rb.AddForce(_cohesionDirection * cohesionForce);
+    }
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.magenta; 
         
         Gizmos.DrawWireSphere(transform.position + (transform.forward * .3f), searchRadius);
-        
-        if(_neighbours == null) return; 
-        
-        foreach (Collider c in _neighbours)
-        {
-            Gizmos.color = Color.yellow;
-
-            //Gizmos.DrawWireSphere(c.transform.position, .5f); 
-        }
     }
 }
