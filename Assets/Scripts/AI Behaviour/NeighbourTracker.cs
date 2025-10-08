@@ -45,7 +45,7 @@ public class NeighbourTracker : MonoBehaviour
             Debug.DrawLine(transform.position + (Vector3.up * .5f), c.transform.position + (Vector3.up * .5f), Color.yellow);
         }
 
-        if (_neighbourColliders.Length == 1) return; 
+        if (_neighbourColliders.Length <= 1) return; 
 
         //todo: maybe neaten all this up but for now seperate functions for each so its easier to know whats going on 
         if(align) Align(_neighbourColliders);
@@ -59,10 +59,12 @@ public class NeighbourTracker : MonoBehaviour
 
         foreach (Collider c in neighbours)
         {
+            if (c == GetComponent<Collider>()) break;
+            
             _alignDirection += c.transform.forward;
         }
         
-        _alignDirection /= neighbours.Length;
+        _alignDirection /= (neighbours.Length - 1);
         
         Debug.DrawRay(transform.position + (Vector3.up * .5f), _alignDirection, Color.green);
 
@@ -75,15 +77,17 @@ public class NeighbourTracker : MonoBehaviour
 
         foreach (Collider c in neighbours)
         {
-            //direction to each neighbour times by 75% of the search radius take the distance to the neighbour
+            if(c == GetComponent<Collider>()) break;
+            
+            //direction to each neighbour times by 75% of the search radius take the distance to the neighbour so stronger the closer they are
             _separateDirection += (c.transform.position - transform.position).normalized * ((searchRadius * .75f) - Vector3.Distance(c.transform.position, transform.position));
         }
         
-        _separateDirection /= neighbours.Length;
+        _separateDirection /= (neighbours.Length - 1);
         
         Debug.DrawRay(transform.position + (Vector3.up * .5f), _separateDirection, Color.red);
         
-        rb.AddForce(_separateDirection * separateForce);
+        rb.AddForce(-_separateDirection * separateForce);
     }
 
     private void Cohese(Collider[] neighbours)
@@ -92,10 +96,13 @@ public class NeighbourTracker : MonoBehaviour
 
         foreach (Collider c in neighbours)
         {
-            _cohesionDirection += (c.transform.position - transform.position).normalized;
+            if(c == GetComponent<Collider>()) break;
+            
+            //times by percentage distance is of max distance stronger the further away they are 
+            _cohesionDirection += (c.transform.position - transform.position).normalized *  Vector3.Distance(c.transform.position, transform.position) / ((searchRadius * .75f));
         }
         
-        _cohesionDirection /= neighbours.Length;
+        _cohesionDirection /= (neighbours.Length - 1);
         
         Debug.DrawRay(transform.position + (Vector3.up * .5f), _cohesionDirection, Color.blue);
         
@@ -106,6 +113,6 @@ public class NeighbourTracker : MonoBehaviour
     {
         Gizmos.color = Color.magenta; 
         
-        Gizmos.DrawWireSphere(transform.position + (transform.forward * .3f), searchRadius);
+        //Gizmos.DrawWireSphere(transform.position + (transform.forward * .3f), searchRadius);
     }
 }

@@ -48,6 +48,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3204662889265200495, guid: 5966c99033e2a8e48840f6c7b24b9674, type: 3}
+      propertyPath: slowSpeed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3204662889265200495, guid: 5966c99033e2a8e48840f6c7b24b9674, type: 3}
+      propertyPath: turnRange
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3204662889265200495, guid: 5966c99033e2a8e48840f6c7b24b9674, type: 3}
+      propertyPath: avoidRange
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 5120811348706434879, guid: 5966c99033e2a8e48840f6c7b24b9674, type: 3}
       propertyPath: m_Name
       value: FemaleShopperAware Variant
@@ -84,14 +96,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 3594797662525501765}
   maxNeighbours: 10
-  searchRadius: 1.2
+  searchRadius: 2
   charLayer:
     serializedVersion: 2
     m_Bits: 512
   eyeLevel: 0
-  align: 0
-  alignForce: 1
+  align: 1
+  alignForce: 0.5
   separate: 1
-  separateForce: 2
+  separateForce: 6
   cohesion: 1
-  cohesionForce: 1
+  cohesionForce: 0.5
