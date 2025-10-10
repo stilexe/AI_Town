@@ -12321,12 +12321,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {x: 0, y: 0, z: 0}
+  minDistanceFromTarget: 2
+  maxDistanceFromTarget: 4
   rb: {fileID: 1872841228}
   turnSpeed: 0.4
   tethered: 1
   tether: {fileID: 435171792}
-  minTetherDistance: 2
-  maxTetherDistance: 4
 --- !u!1001 &1872890659
 PrefabInstance:
   m_ObjectHideFlags: 0

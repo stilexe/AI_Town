@@ -59,7 +59,7 @@ public class NeighbourTracker : MonoBehaviour
 
         foreach (Collider c in neighbours)
         {
-            if (c == GetComponent<Collider>()) break;
+            if (c == GetComponent<Collider>()) continue;
             
             _alignDirection += c.transform.forward;
         }
@@ -77,7 +77,7 @@ public class NeighbourTracker : MonoBehaviour
 
         foreach (Collider c in neighbours)
         {
-            if(c == GetComponent<Collider>()) break;
+            if(c == GetComponent<Collider>()) continue;
             
             //direction to each neighbour times by 75% of the search radius take the distance to the neighbour so stronger the closer they are
             _separateDirection += (c.transform.position - transform.position).normalized * ((searchRadius * .75f) - Vector3.Distance(c.transform.position, transform.position));
@@ -96,7 +96,7 @@ public class NeighbourTracker : MonoBehaviour
 
         foreach (Collider c in neighbours)
         {
-            if(c == GetComponent<Collider>()) break;
+            if(c == GetComponent<Collider>()) continue;
             
             //times by percentage distance is of max distance stronger the further away they are 
             _cohesionDirection += (c.transform.position - transform.position).normalized *  Vector3.Distance(c.transform.position, transform.position) / ((searchRadius * .75f));

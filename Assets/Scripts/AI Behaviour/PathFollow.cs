@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class PathFollow : MonoBehaviour
 {
@@ -11,31 +12,29 @@ public class PathFollow : MonoBehaviour
     private int _currentIndex;
 
     [SerializeField] private TurnTowards turnTowards;
+    [SerializeField] private float distanceBeforeWaypointChange;
+    [SerializeField] private List<GameObject> possibleTargets; //for testing
 
     private void Start()
     {
-        SetRandomPath();
+        SetPath(possibleTargets[Random.Range(0, possibleTargets.Count)].transform.position);
     }
 
-    public void SetPath(List<Node> newPath)
+    public void SetPath(Vector3 target)
     {
-        _path = newPath;
+        _path = PathFinder.Instance.FindPath(transform.position, target);
+        
         _currentIndex = 0;
-        turnTowards.ChangeTarget(_path[_currentIndex].location);
-    }
-
-    public void SetRandomPath()
-    {
-        _path = WorldScanner.Instance.FindPath(WorldScanner.Instance.FindClosestNode(transform.position, true),
-                WorldScanner.Instance.FindRandomNode());
     }
     
     private void FixedUpdate()
     {
         if (_path == null || _path.Count == 0) return; 
         
-        if (Vector2.Distance(transform.position, _path[_currentIndex].location) > 0.1f)
+        if (Vector2.Distance(transform.position, _path[_currentIndex].location) < distanceBeforeWaypointChange)
         {
+            turnTowards.ChangeTarget(_path[_currentIndex].location, true);
+            
             // end of path
             if (_currentIndex == _path.Count - 1)
             {
@@ -46,8 +45,6 @@ public class PathFollow : MonoBehaviour
             }
             
             _currentIndex++;
-            
-            turnTowards.ChangeTarget(_path[_currentIndex].location);
         }
     }
 }
