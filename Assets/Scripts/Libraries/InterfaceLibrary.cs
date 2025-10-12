@@ -2,5 +2,11 @@ using UnityEngine;
 
 public interface ISteering
 {
-    Vector3 CalculateMovement();
+    /// <summary>
+    /// Calculates the necessary movement for the steering behaviour. 
+    /// </summary>
+    /// <returns>[torque, force]</returns>
+    Vector3[] CalculateMovement();
+
+    bool IsNeeded();
 }

@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-public class TurnTowards : MonoBehaviour
+public class TurnTowards : MonoBehaviour, ISteering
 {
     [SerializeField] private bool activeTarget; 
     [SerializeField] private Vector3 target;
@@ -15,6 +15,8 @@ public class TurnTowards : MonoBehaviour
     private Vector3 _targetDirection;
     private float _angle;
     private float _speed;
+    private Vector3 _torque;
+    private Vector3 _force;
 
     [SerializeField] private bool tethered; 
     [SerializeField] private GameObject tether;
@@ -26,16 +28,24 @@ public class TurnTowards : MonoBehaviour
         if (tethered)
         {
             target = tether.transform.position;
+            activeTarget = true;
         }
     }
 
-    private void FixedUpdate()
+    public bool IsNeeded()
     {
-        // if tethered and closer to the target than the minimum distance, return  
         if (!activeTarget || tethered && Vector3.Distance(transform.position, target) <= minDistanceFromTarget)
         {
-            return; 
+            return false; 
         }
+
+        return true; 
+    }
+
+    public Vector3[] CalculateMovement()
+    {
+        _torque = Vector3.zero;
+        _force = Vector3.zero;
         
         //higher speed the further away 
         if (!_pathFollow)
@@ -55,19 +65,21 @@ public class TurnTowards : MonoBehaviour
         {
             if (_angle >= 0)
             {
-                rb.AddRelativeTorque(0, _speed, 0);
+                _torque += new Vector3(0, _speed, 0);
             }
             else
             {
-                rb.AddRelativeTorque(0, -_speed, 0);
+                _torque -= new Vector3(0, _speed, 0);
             }
 
             //higher angles kind of back up a bit 
             if (Mathf.Abs(_angle) > 40)
             {
-                rb.AddRelativeForce(Vector3.back * _speed);
+                _force += Vector3.back * _speed;
             }
         }
+
+        return new Vector3[] {_torque, _force};
     }
 
     public void ChangeTarget(Vector3 newTarget, bool pathPoint = false)

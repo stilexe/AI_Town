@@ -1895,6 +1895,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4810200581573961147, guid: 0ebf2ac6678846345af1ddad09332954, type: 3}
   m_PrefabInstance: {fileID: 153787951}
   m_PrefabAsset: {fileID: 0}
+--- !u!54 &153871407 stripped
+Rigidbody:
+  m_CorrespondingSourceObject: {fileID: 3594797662525501765, guid: 562cd69868a32844d9282d1ff0d6168f, type: 3}
+  m_PrefabInstance: {fileID: 5006027507602592658}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &155343163
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26787,6 +26792,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FemaleShopperAware
       objectReference: {fileID: 0}
+    - target: {fileID: 5262838957543237919, guid: 562cd69868a32844d9282d1ff0d6168f, type: 3}
+      propertyPath: rb
+      value: 
+      objectReference: {fileID: 153871407}
     - target: {fileID: 7953911147183798381, guid: 562cd69868a32844d9282d1ff0d6168f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4.474245

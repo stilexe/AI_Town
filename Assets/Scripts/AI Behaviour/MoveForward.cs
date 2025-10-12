@@ -1,16 +1,22 @@
 using System;
 using UnityEngine;
 
-public class MoveForward : MonoBehaviour
+public class MoveForward : MonoBehaviour, ISteering
 {
     [SerializeField] Rigidbody rb;
 
-    public Vector3 speed; 
-    
-    
-    private void FixedUpdate()
+    [SerializeField] private Vector3 speed;
+
+    [SerializeField] private bool walking;
+
+    public bool IsNeeded()
     {
-        rb.AddRelativeForce(speed);
+        return walking;
+    }
+
+    public Vector3[] CalculateMovement()
+    {
+        return new Vector3[] {Vector3.zero, speed}; 
     }
     
 }

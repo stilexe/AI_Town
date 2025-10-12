@@ -48,6 +48,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2533965731401101701, guid: 5966c99033e2a8e48840f6c7b24b9674, type: 3}
+      propertyPath: walking
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3204662889265200495, guid: 5966c99033e2a8e48840f6c7b24b9674, type: 3}
       propertyPath: slowSpeed
       value: 3
@@ -60,6 +64,10 @@ PrefabInstance:
       propertyPath: avoidRange
       value: 1.5
       objectReference: {fileID: 0}
+    - target: {fileID: 3204662889265200495, guid: 5966c99033e2a8e48840f6c7b24b9674, type: 3}
+      propertyPath: observableMask.m_Bits
+      value: 320
+      objectReference: {fileID: 0}
     - target: {fileID: 5120811348706434879, guid: 5966c99033e2a8e48840f6c7b24b9674, type: 3}
       propertyPath: m_Name
       value: FemaleShopperAware Variant
@@ -71,6 +79,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5120811348706434879, guid: 5966c99033e2a8e48840f6c7b24b9674, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8696388461372877716}
+    - targetCorrespondingSourceObject: {fileID: 5120811348706434879, guid: 5966c99033e2a8e48840f6c7b24b9674, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5262838957543237919}
   m_SourcePrefab: {fileID: 100100000, guid: 5966c99033e2a8e48840f6c7b24b9674, type: 3}
 --- !u!54 &3594797662525501765 stripped
 Rigidbody:
@@ -107,3 +118,16 @@ MonoBehaviour:
   separateForce: 6
   cohesion: 1
   cohesionForce: 0.5
+--- !u!114 &5262838957543237919
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4604068039899981530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38c29bb727b8dcb44b1fabbff507293e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rb: {fileID: 3594797662525501765}

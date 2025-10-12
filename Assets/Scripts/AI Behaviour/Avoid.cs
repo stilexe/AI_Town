@@ -1,9 +1,7 @@
 using System;
 using UnityEngine;
-using System.Collections;
-using Random = UnityEngine.Random;
 
-public class Avoid : MonoBehaviour
+public class Avoid : MonoBehaviour, ISteering 
 {
     [SerializeField] Rigidbody rb;
     [SerializeField] private LayerMask observableMask;
@@ -17,8 +15,19 @@ public class Avoid : MonoBehaviour
     private int _rayCount;
     private Vector3 _startDirection;
 
-    private void FixedUpdate()
+    private Vector3 _torque;
+    private Vector3 _force;
+
+    public bool IsNeeded()
     {
+        return true; 
+    }
+
+    public Vector3[] CalculateMovement()
+    {
+        _torque = Vector3.zero;
+        _force = Vector3.zero;
+        
         if (rb.linearVelocity.magnitude < .4)
         {
             rb.AddRelativeTorque(0, turnRange ,0);
@@ -30,27 +39,38 @@ public class Avoid : MonoBehaviour
 
         for (int i = 0; i < _rayCount; i++)
         {
+            Debug.DrawRay(transform.position, Quaternion.Euler(0, _rayAngle, 0) * _startDirection, Color.cyan);
+            
             if (Physics.Raycast(transform.position, Quaternion.Euler(0, _rayAngle, 0) * _startDirection, out RaycastHit hit, avoidRange,
                     observableMask))
             {
                 //Debug.Log(name + "raycast hit" + hit.collider.name);
 
                 //more back force closer the hit is 
-                rb.AddRelativeForce(Vector3.back * (slowSpeed)); //todo: smaller hit distance bigger push back maths 
+                _force = Vector3.back * (slowSpeed); //todo: smaller hit distance bigger push back maths 
 
-                if (i > _rayCount / 2) // saw object on the left  
+                //turn away from object 
+                if (i > _rayCount / 2) //go right
                 {
-                    rb.AddRelativeTorque(0, -turnRange * (avoidRange / hit.distance) ,0); // turn strength bigger the closer the object is 
+                    _torque -= new Vector3(0, turnRange * (avoidRange / hit.distance) ,0); // turn strength bigger the closer the object is 
                 }
-                else //saw object on the right 
+                else  //go left 
                 {
-                    rb.AddRelativeTorque(0, turnRange * (avoidRange / hit.distance) ,0);
+                    _torque += new Vector3(0, turnRange * (avoidRange / hit.distance) ,0);
                 }
-                
-                return;
+
+                break;
             }
 
             _rayAngle += fieldOfView / _rayCount; 
         }
+        
+        return new Vector3[]{_torque, _force}; 
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireSphere(transform.position, avoidRange);
     }
 }
