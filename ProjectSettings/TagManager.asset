@@ -4,7 +4,7 @@
 TagManager:
   serializedVersion: 3
   tags:
-  - Freezer
+  - House
   layers:
   - Default
   - TransparentFX
@@ -17,8 +17,8 @@ TagManager:
   - Interactable
   - Character
   - Door
-  - 
-  - 
+  - Road
+  - Grass
   - 
   - 
   - 
