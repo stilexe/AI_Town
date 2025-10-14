@@ -49,6 +49,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2533965731401101701, guid: 5966c99033e2a8e48840f6c7b24b9674, type: 3}
+      propertyPath: speed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2533965731401101701, guid: 5966c99033e2a8e48840f6c7b24b9674, type: 3}
       propertyPath: walking
       value: 1
       objectReference: {fileID: 0}
@@ -112,11 +116,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   eyeLevel: 0
-  align: 1
   alignForce: 0.5
-  separate: 1
-  separateForce: 6
-  cohesion: 1
+  separateForce: 2
   cohesionForce: 0.5
 --- !u!114 &5262838957543237919
 MonoBehaviour:

@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class Avoid : MonoBehaviour, ISteering 
 {
-    [SerializeField] Rigidbody rb;
     [SerializeField] private LayerMask observableMask;
     [SerializeField] private float avoidRange;
     [SerializeField] private float turnRange;
@@ -28,10 +27,10 @@ public class Avoid : MonoBehaviour, ISteering
         _torque = Vector3.zero;
         _force = Vector3.zero;
         
-        if (rb.linearVelocity.magnitude < .4)
-        {
-            rb.AddRelativeTorque(0, turnRange ,0);
-        }
+        // if (rb.linearVelocity.magnitude < .4)
+        // {
+        //     rb.AddRelativeTorque(0, turnRange ,0);
+        // }
 
         _rayCount = maxRays; //TODO: change the number of rays based on distance from camera (maybe) 
         _rayAngle = 0;
@@ -68,9 +67,9 @@ public class Avoid : MonoBehaviour, ISteering
         return new Vector3[]{_torque, _force}; 
     }
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.cyan;
-        Gizmos.DrawWireSphere(transform.position, avoidRange);
-    }
+    // private void OnDrawGizmos()
+    // {
+    //     Gizmos.color = Color.cyan;
+    //     Gizmos.DrawWireSphere(transform.position, avoidRange);
+    // }
 }

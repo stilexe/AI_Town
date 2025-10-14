@@ -3,11 +3,9 @@ using UnityEngine;
 
 public class MoveForward : MonoBehaviour, ISteering
 {
-    [SerializeField] Rigidbody rb;
+    [SerializeField] private float speed;
 
-    [SerializeField] private Vector3 speed;
-
-    [SerializeField] private bool walking;
+    [SerializeField] private bool walking = true;
 
     public bool IsNeeded()
     {
@@ -16,7 +14,7 @@ public class MoveForward : MonoBehaviour, ISteering
 
     public Vector3[] CalculateMovement()
     {
-        return new Vector3[] {Vector3.zero, speed}; 
+        return new Vector3[] {Vector3.zero, Vector3.forward * speed}; 
     }
     
 }

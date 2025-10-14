@@ -9,21 +9,21 @@ public class NeighbourTracker : MonoBehaviour, ISteering
     private Collider[] _neighbourColliders;
     private List<Collider> _neighbours;
 
-    [SerializeField] private Rigidbody rb; 
+    [SerializeField] private Rigidbody rb;
     [SerializeField] private int maxNeighbours;
     [SerializeField] private float searchRadius;
     [SerializeField] private LayerMask charLayer;
     [SerializeField] private float eyeLevel;
 
-    [SerializeField] private bool align;
+    //[SerializeField] private bool align;
     [SerializeField] private float alignForce;
     private Vector3 _alignDirection;
     
-    [SerializeField] private bool separate;
+    //[SerializeField] private bool separate;
     [SerializeField] private float separateForce;
     private Vector3 _separateDirection;
     
-    [SerializeField] private bool cohesion;
+    //[SerializeField] private bool cohesion;
     [SerializeField] private float cohesionForce;
     private Vector3 _cohesionDirection;
 
@@ -61,32 +61,36 @@ public class NeighbourTracker : MonoBehaviour, ISteering
         _torque = Vector3.zero;
         _force = Vector3.zero;
         
-        _alignDirection = Vector3.zero;
-        _separateDirection = Vector3.zero;
-        _cohesionDirection = Vector3.zero;
+        // _alignDirection = Vector3.zero;
+        // _separateDirection = Vector3.zero;
+        // _cohesionDirection = Vector3.zero;
 
         foreach (Collider c in _neighbourColliders)
         {
             if (c == GetComponent<Collider>()) continue;
             
-            _alignDirection += c.transform.forward;
-            _separateDirection += (c.transform.position - transform.position).normalized * 
-                                  ((searchRadius * .75f) - Vector3.Distance(c.transform.position, transform.position));
-            _cohesionDirection += (c.transform.position - transform.position).normalized *  
-                Vector3.Distance(c.transform.position, transform.position) / ((searchRadius * .75f));
+            _alignDirection = c.transform.forward;
+            _separateDirection = -(c.transform.position - transform.position).normalized * 
+                                  (searchRadius - Vector3.Distance(c.transform.position, transform.position)); //higher force closer to neighbour
+            _cohesionDirection = (c.transform.position - transform.position).normalized *  
+                (Vector3.Distance(c.transform.position, transform.position) / searchRadius); //higher force further from neighbour
         }
         
         _alignDirection /= (_neighbourColliders.Length - 1);
         _separateDirection /= (_neighbourColliders.Length - 1);
         _cohesionDirection /= (_neighbourColliders.Length - 1);
         
-        Debug.DrawRay(transform.position + (Vector3.up * .5f), _alignDirection, Color.green);
+        //Debug.DrawRay(transform.position + (Vector3.up * .5f), _alignDirection, Color.green);
         Debug.DrawRay(transform.position + (Vector3.up * .5f), _separateDirection, Color.red);
         Debug.DrawRay(transform.position + (Vector3.up * .5f), _cohesionDirection, Color.blue);
 
         _torque += Vector3.Cross(transform.forward, _alignDirection) * alignForce;
-        _force -= _separateDirection * separateForce;
+        _force += _separateDirection * separateForce;
         _force += _cohesionDirection * cohesionForce;
+        
+        // rb.AddTorque(Vector3.Cross(transform.forward, _alignDirection) * alignForce);
+        // rb.AddForce(_separateDirection * separateForce);
+        // rb.AddForce(_cohesionDirection * cohesionForce);
         
         return new Vector3[] { _torque, _force };
     }

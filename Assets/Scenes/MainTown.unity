@@ -16223,7 +16223,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4643207767760403793, guid: 444df4473d2d38f43b2b731b05ff0eb4, type: 3}
       propertyPath: slowSpeed
-      value: 8
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4643207767760403793, guid: 444df4473d2d38f43b2b731b05ff0eb4, type: 3}
       propertyPath: turnRange
@@ -16231,11 +16231,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4643207767760403793, guid: 444df4473d2d38f43b2b731b05ff0eb4, type: 3}
       propertyPath: avoidRange
-      value: 4
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4643207767760403793, guid: 444df4473d2d38f43b2b731b05ff0eb4, type: 3}
       propertyPath: fieldOfView
       value: 170
+      objectReference: {fileID: 0}
+    - target: {fileID: 8412228878046875109, guid: 444df4473d2d38f43b2b731b05ff0eb4, type: 3}
+      propertyPath: speed
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8412228878046875109, guid: 444df4473d2d38f43b2b731b05ff0eb4, type: 3}
       propertyPath: speed.z

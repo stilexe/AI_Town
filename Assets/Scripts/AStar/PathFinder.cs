@@ -29,12 +29,8 @@ public class PathFinder : MonoBehaviour
         {
             Destroy(gameObject);
         }
-    }
-
-    private void Start()
-    {
+        
         _scanner = GetComponent<WorldScanner>();
-        //FindPath(_scanner.FindRandomNode(), _scanner.FindRandomNode());    
     }
 
     public List<Node> FindPath(Vector3 start, Vector3 end)

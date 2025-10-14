@@ -6,10 +6,8 @@ public class TurnTowards : MonoBehaviour, ISteering
 {
     [SerializeField] private bool activeTarget; 
     [SerializeField] private Vector3 target;
-    [SerializeField] private float minDistanceFromTarget;
     [SerializeField] private float maxDistanceFromTarget; 
-
-    [SerializeField] private Rigidbody rb;
+    
     [SerializeField] private float turnSpeed; 
     
     private Vector3 _targetDirection;
@@ -20,6 +18,7 @@ public class TurnTowards : MonoBehaviour, ISteering
 
     [SerializeField] private bool tethered; 
     [SerializeField] private GameObject tether;
+    [SerializeField] private float minDistanceFromTether;
 
     private bool _pathFollow; 
 
@@ -34,7 +33,7 @@ public class TurnTowards : MonoBehaviour, ISteering
 
     public bool IsNeeded()
     {
-        if (!activeTarget || tethered && Vector3.Distance(transform.position, target) <= minDistanceFromTarget)
+        if (!activeTarget || tethered && Vector3.Distance(transform.position, target) <= minDistanceFromTether)
         {
             return false; 
         }
@@ -84,10 +83,7 @@ public class TurnTowards : MonoBehaviour, ISteering
 
     public void ChangeTarget(Vector3 newTarget, bool pathPoint = false)
     {
-        if (!activeTarget)
-        {
-            activeTarget = true;
-        }
+        activeTarget = true;
 
         _pathFollow = pathPoint;
         
@@ -105,7 +101,7 @@ public class TurnTowards : MonoBehaviour, ISteering
 
         Gizmos.color = Color.blue;
         
-        Gizmos.DrawWireSphere(target, minDistanceFromTarget);
+        Gizmos.DrawWireSphere(target, maxDistanceFromTarget);
         Gizmos.DrawLine(transform.position, target); 
     }
 }
