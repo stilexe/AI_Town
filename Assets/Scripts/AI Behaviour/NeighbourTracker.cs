@@ -80,7 +80,7 @@ public class NeighbourTracker : MonoBehaviour, ISteering
         _separateDirection /= (_neighbourColliders.Length - 1);
         _cohesionDirection /= (_neighbourColliders.Length - 1);
         
-        //Debug.DrawRay(transform.position + (Vector3.up * .5f), _alignDirection, Color.green);
+        Debug.DrawRay(transform.position + (Vector3.up * .5f), _alignDirection, Color.green);
         Debug.DrawRay(transform.position + (Vector3.up * .5f), _separateDirection, Color.red);
         Debug.DrawRay(transform.position + (Vector3.up * .5f), _cohesionDirection, Color.blue);
 
@@ -99,6 +99,6 @@ public class NeighbourTracker : MonoBehaviour, ISteering
     {
         Gizmos.color = Color.magenta; 
         
-        //Gizmos.DrawWireSphere(transform.position + (transform.forward * .3f), searchRadius);
+        Gizmos.DrawWireSphere(transform.position + (transform.forward * .3f), searchRadius);
     }
 }
