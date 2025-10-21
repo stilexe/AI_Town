@@ -5,6 +5,7 @@ using UnityEngine;
 public class Look : MonoBehaviour
 {
     [SerializeField] private float fieldOfView;
+    [SerializeField] private float sightDistance;
     [SerializeField] private float reachDistance; 
     [SerializeField] private int maxRays;
     [SerializeField] private float eyeLevel;
@@ -19,8 +20,8 @@ public class Look : MonoBehaviour
     {
         _eyeLevelOffset = Vector3.up * eyeLevel;
     }
-
-    public List<RaycastHit> LookAround(LayerMask observableMask, int observableRange)
+    
+    public List<RaycastHit> LookAround()
     {
         List<RaycastHit> inView = new List<RaycastHit>();
         
@@ -33,7 +34,31 @@ public class Look : MonoBehaviour
             Debug.DrawRay(transform.position, Quaternion.Euler(0, _rayAngle, 0) * _start, Color.cyan);
             
             if (Physics.Raycast(transform.position, Quaternion.Euler(0, _rayAngle, 0) * _start, 
-                    out RaycastHit hit, observableRange, observableMask))
+                    out RaycastHit hit, sightDistance))
+            {
+                inView.Add(hit); 
+            }
+            
+            _rayAngle += fieldOfView / _rayCount; 
+        }
+
+        return inView;
+    }
+
+    public List<RaycastHit> LookAround(LayerMask observableMask)
+    {
+        List<RaycastHit> inView = new List<RaycastHit>();
+        
+        _rayCount = maxRays; //TODO: change the number of rays based on distance from camera (maybe) 
+        _rayAngle = 0;
+        _start = Quaternion.Euler(0, -fieldOfView / 2, 0) * transform.forward;
+
+        for (int i = 0; i < _rayCount; i++)
+        {
+            Debug.DrawRay(transform.position, Quaternion.Euler(0, _rayAngle, 0) * _start, Color.cyan);
+            
+            if (Physics.Raycast(transform.position, Quaternion.Euler(0, _rayAngle, 0) * _start, 
+                    out RaycastHit hit, sightDistance, observableMask))
             {
                 inView.Add(hit); 
             }
@@ -73,13 +98,8 @@ public class Look : MonoBehaviour
     /// Check the reachable surroundings of the character
     /// </summary>
     /// <returns>Colliders in the reachable range</returns>
-    public Collider[] CheckSurroundings()
+    public Collider[] CheckReachableDistance()
     {
         return Physics.OverlapSphere(transform.position, reachDistance);
-    }
-    
-    public Collider[] CheckSurroundings(LayerMask mask)
-    {
-        return Physics.OverlapSphere(transform.position, reachDistance, mask);
     }
 }

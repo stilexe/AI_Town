@@ -4,19 +4,13 @@ using UnityEngine;
 
 public class Destroy : MonoBehaviour
 {
-    [SerializeField] private LayerMask destroyTargets;
-    [SerializeField] private int maxDistance;
     [SerializeField] private float damageCooldown;
-    [SerializeField] private float reachRadius;
     [SerializeField] private int strength; 
 
     private GameObject _toDestroy;
-    private Damageable _damageable;
     private Look _look;
     private TurnTowards _turnTowards;
-    private Collider[] _reach;
-    private bool _destroying;
-    private bool _canDestroy;
+    private bool _canDestroy = true;
 
     private void OnEnable()
     {
@@ -29,9 +23,9 @@ public class Destroy : MonoBehaviour
         //if nothing to destroy look around for something 
         if (_toDestroy is null)
         {
-            foreach (RaycastHit hit in _look.LookAround(destroyTargets, maxDistance))
+            foreach (RaycastHit hit in _look.LookAround())
             {
-                if (hit.collider.gameObject.GetComponent<Damageable>() is not null) //todo: change how this figures out if its damageable
+                if (hit.collider.gameObject.TryGetComponent(out IDamageable d))
                 {
                     _toDestroy = hit.collider.gameObject;
                     _turnTowards.ChangeTarget(hit.point);
@@ -42,46 +36,41 @@ public class Destroy : MonoBehaviour
 
         if (!_canDestroy) return;
         
-        foreach (Collider c in _look.CheckSurroundings(destroyTargets))
+        foreach (Collider c in _look.CheckReachableDistance())
         {
-            if (_toDestroy is null) //if we don't have something we are targeting but we did find something we can reach 
+            if (c.gameObject.TryGetComponent(out IDamageable d))
             {
-                _toDestroy = c.gameObject;
-                _turnTowards.ChangeTarget(c.transform.position);
+                if (_toDestroy is null) //if we don't have something we are targeting but we did find something we can reach 
+                {
+                    _toDestroy = c.gameObject;
+                    _turnTowards.ChangeTarget(c.transform.position);
+                }
+                
+                d.TakeDamage(strength); 
+ 
+                StartCoroutine(Cooldown());
+                return; 
             }
-
-            // if (c.gameObject == _toDestroy) //if it's the to destroy object 
-            // {
-            //     _destroying = true;
-            //     c.GetComponent<Damageable>().TakeDamage(strength);
-            //     _canDestroy = false; 
-            //     StartCoroutine(CauseDamage());
-            //     return;
-            // }
-            
-            c.gameObject.GetComponent<Damageable>().TakeDamage(strength); //punch everything in reach once 
-            _canDestroy = false; 
-            StartCoroutine(Cooldown());
         }
     }
 
     private IEnumerator Cooldown()
     {
-        yield return new WaitForSeconds(damageCooldown);
+        _canDestroy = false; 
         
-        _canDestroy = true;
+        yield return new WaitForSeconds(damageCooldown);
 
         if (_toDestroy is null)
         {
             _turnTowards.ClearTarget();
         }
+        
+        _canDestroy = true;
     }
 
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        
-        Gizmos.DrawWireSphere(transform.position, reachRadius); //show reach 
 
         if (_toDestroy != null)
         {

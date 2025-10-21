@@ -75,6 +75,23 @@ public class WorldScanner : MonoBehaviour
         }
     }
 
+    public void ScanWorld(Vector3 position)
+    {
+        //todo: change to find closest node to position and scan surroundings 
+        foreach (Node n in _grid)
+        {
+            // check if node is blocked 
+            if (Physics.CheckBox(n.location, gridSize / 2, Quaternion.identity, blockedLayers))
+            {
+                n.isBlocked = true;
+            }
+            else
+            {
+                n.isBlocked = false;
+            }
+        }
+    }
+
     /// <summary>
     /// Finds closest accessible node to the passed position. 
     /// </summary>

@@ -7,7 +7,8 @@ public class CameraController : MonoBehaviour
     [SerializeField] private Transform supermarketPosition, cornerPosition, hoverPosition;
     [SerializeField] private Vector3 followPosition;
     [SerializeField] private Quaternion followRotation;
-    [SerializeField] private TextMeshProUGUI displayHeader, displayText; 
+    [SerializeField] private TextMeshProUGUI displayHeader;
+    [SerializeField] private GameObject descriptionPanel; 
     
 
     private bool _following;
@@ -72,6 +73,7 @@ public class CameraController : MonoBehaviour
         _followDisplay = target.GetComponent<BehaviourDisplay>();
         _followDisplay.StartDisplay();
         displayHeader.text = _followDisplay.GetDisplayName();
+        UpdateDescription();
     }
 
     private void Unfollow()
@@ -86,6 +88,32 @@ public class CameraController : MonoBehaviour
         {
             _followDisplay.NextBehaviour();
             displayHeader.text = _followDisplay.GetDisplayName();
+            UpdateDescription();
+        }
+    }
+
+    public void DisplayFollowingPath()
+    {
+        if (_following)
+        {
+            _followDisplay.DisplayPath();
+        }
+    }
+
+    private void UpdateDescription()
+    {
+        List<string> description = _followDisplay.GetDescription();
+        
+        for (int i = 0; i < descriptionPanel.transform.childCount; i++)
+        {
+            if (i >= description.Count) //not a description
+            {
+                descriptionPanel.transform.GetChild(i).GetComponent<TextMeshProUGUI>().text = "";
+            }
+            else
+            {
+                descriptionPanel.transform.GetChild(i).GetComponent<TextMeshProUGUI>().text = description[i];
+            }
         }
     }
 

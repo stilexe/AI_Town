@@ -34,8 +34,15 @@ public class Doorknocker : MonoBehaviour
         }
         
         _door = newDoor;
-        
-        _pathFollow.SetPath(_door.transform.position);
+
+        if (_door is not null) //sometimes gets destroyed 
+        {
+            _pathFollow.SetPath(_door.transform.position);
+        }
+        else
+        {
+            NewDoor();
+        }
     }
     
     

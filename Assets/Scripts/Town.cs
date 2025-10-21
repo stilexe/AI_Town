@@ -9,7 +9,8 @@ public class Town : MonoBehaviour
     
     [SerializeField] private GameObject supermarketDoor;
     [SerializeField] private GameObject cnrStoreDoor;
-    [SerializeField] private List<GameObject> houseDoors;
+    
+    private GameObject[] houseDoors;
 
     private void OnEnable()
     {
@@ -21,11 +22,13 @@ public class Town : MonoBehaviour
         {
             Destroy(this);
         }
+        
+        houseDoors = GameObject.FindGameObjectsWithTag("Door");
     }
 
     public GameObject RandomDoor()
     {
-        return houseDoors[Random.Range(0, houseDoors.Count - 1)];
+        return houseDoors[Random.Range(0, houseDoors.Length)];
     }
 
     public GameObject SupermarketDoor()

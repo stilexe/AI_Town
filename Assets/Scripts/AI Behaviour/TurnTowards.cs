@@ -98,7 +98,7 @@ public class TurnTowards : MonoBehaviour, ISteering
     {
         return new Dictionary<Color, List<Vector3>>()
         {
-            { Color.magenta, new List<Vector3>()
+            { Color.green, new List<Vector3>()
                 {
                     transform.position, target
                 }
@@ -109,6 +109,15 @@ public class TurnTowards : MonoBehaviour, ISteering
                     transform.position, transform.position + (_targetDirection.normalized * 4)
                 }
             }
+        };
+    }
+    
+    public List<string> LineRenderDescription()
+    {
+        return new List<string>()
+        {
+            "Green: shows where we are trying to rotate to face the location",
+            "Magenta: connects to the location we are turning towards",
         };
     }
 

@@ -17,11 +17,9 @@ public class Interact : MonoBehaviour
     {
         if (!_canInteract) return; 
         
-        foreach (Collider c in _look.CheckSurroundings())
+        foreach (Collider c in _look.CheckReachableDistance())
         {
-            _interactable = c.GetComponent<IInteractable>();
-            
-            if (_interactable != null)
+            if (c.TryGetComponent(out _interactable))
             {
                 _interactable.Interact(gameObject);
                 _canInteract = false;

@@ -1,14 +1,13 @@
-using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
 
-public class Damageable : MonoBehaviour
+public class House : MonoBehaviour, IDamageable
 {
-    [SerializeField] private int maxHealth = 100;
+    [SerializeField] private int maxHealth = 30;
     [SerializeField] private TextMeshProUGUI healthText;
     private int _health;
-
+    
     private void Start()
     {
         _health = maxHealth;
@@ -18,7 +17,7 @@ public class Damageable : MonoBehaviour
     {
         healthText.text = _health + "/" + maxHealth;
     }
-
+    
     public void TakeDamage(int damage)
     {
         Debug.Log("Taking damage");
@@ -27,18 +26,14 @@ public class Damageable : MonoBehaviour
 
         if (_health <= 0)
         {
-            EventManager.InvokeObjectDestroyed();
-            
-            Destroy(gameObject);
+            Die();
         }
-
-        StartCoroutine(FlashRed());
     }
 
-    private IEnumerator FlashRed()
+    public void Die()
     {
-        gameObject.GetComponent<Material>().SetColor("_Color", Color.red);
-        yield return new WaitForSeconds(2f);
-        gameObject.GetComponent<Material>().SetColor("_Color", Color.white);
+        EventManager.InvokeObjectDestroyed(transform.position);
+            
+        Destroy(gameObject);
     }
 }

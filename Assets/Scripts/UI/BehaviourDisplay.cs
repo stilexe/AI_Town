@@ -8,7 +8,9 @@ public class BehaviourDisplay : MonoBehaviour
     private List<ISteering> _steerings = new List<ISteering>();
     private Dictionary<Color, List<Vector3>> _lines;
     private List<LineRenderer> _lineRenderers = new List<LineRenderer>();
+    private LineRenderer _pathLine; 
     private bool _displayOn;
+    public List<string> GetDescription() { return _steerings[_displayedIndex].LineRenderDescription(); }
 
 
     public string GetDisplayName()
@@ -91,11 +93,44 @@ public class BehaviourDisplay : MonoBehaviour
         }
     }
 
+    public void DisplayPath()
+    {
+        if (TryGetComponent(out PathFollow follow)) 
+        {
+            List<Node> path = follow.GetPath();
+            
+            if (_pathLine == null)
+            {
+                GameObject newGo = new GameObject();
+                newGo.transform.SetParent(transform);
+                newGo.transform.localPosition = Vector3.zero;
+        
+                _pathLine = newGo.AddComponent<LineRenderer>();
+                _pathLine.material = new Material(Shader.Find("Sprites/Default"));
+                _pathLine.startColor = Color.magenta;
+                _pathLine.endColor = Color.magenta;
+            }
+
+            _pathLine.positionCount = path.Count;
+
+            for (int i = 0; i < path.Count; i++)
+            {
+                _pathLine.SetPosition(i, path[i].location);
+            }
+        }
+        
+    }
+
     public void ClearDisplay()
     {
         foreach (LineRenderer lr in _lineRenderers)
         {
             lr.positionCount = 0;
+        }
+
+        if (_pathLine)
+        {
+            _pathLine.positionCount = 0;
         }
     }
 

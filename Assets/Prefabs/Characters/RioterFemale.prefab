@@ -261,7 +261,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   avoidMask:
     serializedVersion: 2
-    m_Bits: 2368
+    m_Bits: 320
   avoidRange: 4
   turnRange: 2
   slowSpeed: 7
@@ -299,7 +299,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fieldOfView: 140
-  reachDistance: 0
+  sightDistance: 4
+  reachDistance: 2
   maxRays: 6
   eyeLevel: 1
   floor:
@@ -320,9 +321,8 @@ MonoBehaviour:
   destroyTargets:
     serializedVersion: 2
     m_Bits: 2048
-  maxDistance: 5
   damageCooldown: 2
-  reachRadius: 2
+  reachRadius: 4
   strength: 5
 --- !u!114 &3902680213259345218
 MonoBehaviour:

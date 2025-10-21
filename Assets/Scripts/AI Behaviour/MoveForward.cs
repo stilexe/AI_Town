@@ -27,10 +27,17 @@ public class MoveForward : MonoBehaviour, ISteering
         {
             { Color.green, new List<Vector3>()
                 {
-                    transform.position, transform.position + transform.forward * speed
+                    transform.position, transform.position + transform.forward * 4
                 }
             },
         };
     }
-    
+
+    public List<string> LineRenderDescription()
+    {
+        return new List<string>()
+        {
+            "Green: direction moving."
+        };
+    }
 }

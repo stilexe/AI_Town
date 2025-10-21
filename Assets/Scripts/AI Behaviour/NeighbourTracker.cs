@@ -126,6 +126,16 @@ public class NeighbourTracker : MonoBehaviour, ISteering
         };
 
     }
+    
+    public List<string> LineRenderDescription()
+    {
+        return new List<string>()
+        {
+            "Blue (alignment): shows where we are trying to rotate to align with neighbours",
+            "Green (cohesion): shows the direction we are trying towards neighbours",
+            "Red (separation) shows the direction we are trying being pushed away from neighbours"
+        };
+    }
 
     private void OnDrawGizmos()
     {

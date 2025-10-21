@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,13 +11,13 @@ public interface ISteering
     Vector3[] CalculateMovement();
 
     Dictionary<Color,List<Vector3>> LineRenderDisplay();
+    List<string> LineRenderDescription();
 }
 
 public interface IDamageable
 {
-    int Health { get; }
     void TakeDamage(int damage);
-    void Die(); 
+    void Die();
 }
 
 public interface IInteractable

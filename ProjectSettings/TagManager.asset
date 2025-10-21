@@ -4,12 +4,13 @@
 TagManager:
   serializedVersion: 3
   tags:
-  - House
   - Floor
   - Rioter
   - Townfolk
   - Shopper
   - Doorknocker
+  - House
+  - Door
   layers:
   - Default
   - TransparentFX

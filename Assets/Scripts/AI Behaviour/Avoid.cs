@@ -6,9 +6,8 @@ public class Avoid : MonoBehaviour, ISteering
 {
     [SerializeField] private LayerMask avoidMask;
     [SerializeField] private int avoidRange;
-    [SerializeField] private float turnRange;
+    [SerializeField] private float turnStrength;
     [SerializeField] private float slowSpeed;
-    [SerializeField] private float maxDropHeight;
     
     private Vector3 _avoidLocation;
     private float _avoidDistance;
@@ -42,14 +41,17 @@ public class Avoid : MonoBehaviour, ISteering
 
                 _avoidLocation = transform.position + (transform.forward * 2);
                 _avoidDistance = Vector3.Distance(_avoidLocation, transform.position);
-            
+
             }
         }
         
-        foreach (RaycastHit hit in _look.LookAround(avoidMask, avoidRange))
+        foreach (RaycastHit hit in _look.LookAround(avoidMask))
         {
-            _avoidLocation = hit.point;
-            _avoidDistance = hit.distance;
+            if (hit.distance < avoidRange)
+            {
+                _avoidLocation = hit.point;
+                _avoidDistance = hit.distance;
+            }
         }
 
         if (_avoidLocation == Vector3.zero)
@@ -62,13 +64,13 @@ public class Avoid : MonoBehaviour, ISteering
         
         //turn away from object 
         // turn and slow strength bigger the closer the object is 
-        if (Vector3.Angle(_avoidLocation - transform.position, transform.forward) < 90)
+        if (Vector3.SignedAngle(transform.forward, _avoidLocation - transform.position, transform.up) > 0)
         {
-            _turnDirection = new(0, -turnRange * (avoidRange / _avoidDistance), 0);
+            _turnDirection = new(0, -turnStrength * (_avoidDistance / avoidRange), 0); //left turn 
         }
         else
         {
-            _turnDirection = new(0, turnRange * (avoidRange / _avoidDistance), 0);
+            _turnDirection = new(0, turnStrength * (_avoidDistance / avoidRange), 0); //right turn 
         }
         
         return new Vector3[]
@@ -98,6 +100,15 @@ public class Avoid : MonoBehaviour, ISteering
                     transform.position, transform.position + (_turnDirection * 4)
                 }
             }
+        };
+    }
+    
+    public List<string> LineRenderDescription()
+    {
+        return new List<string>()
+        {
+            "Red: leads to where the object to avoid was detected.",
+            "Blue: shows where we are trying to rotate to"
         };
     }
 }
