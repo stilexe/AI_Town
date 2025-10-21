@@ -35,7 +35,15 @@ public class WorldScanner : MonoBehaviour
         }
         
         _grid = new Node[(int)groundSize.x, (int)groundSize.z];
+
+        EventManager.OnObjectDestroyed += ScanWorld;
+        
         GridSetUp();
+    }
+
+    private void OnDisable()
+    {
+        EventManager.OnObjectDestroyed -= ScanWorld;
     }
 
     private void GridSetUp()

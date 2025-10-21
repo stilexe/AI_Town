@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class TurnTowards : MonoBehaviour, ISteering
@@ -31,18 +32,16 @@ public class TurnTowards : MonoBehaviour, ISteering
         }
     }
 
-    public bool IsNeeded()
+    public Vector3[] CalculateMovement()
     {
         if (!activeTarget || tethered && Vector3.Distance(transform.position, target) <= minDistanceFromTether)
         {
-            return false; 
+            return new Vector3[]
+            { 
+                Vector3.zero, Vector3.zero
+            }; 
         }
 
-        return true; 
-    }
-
-    public Vector3[] CalculateMovement()
-    {
         _torque = Vector3.zero;
         _force = Vector3.zero;
         
@@ -93,6 +92,24 @@ public class TurnTowards : MonoBehaviour, ISteering
     public void ClearTarget()
     {
         activeTarget = false;
+    }
+
+    public Dictionary<Color, List<Vector3>> LineRenderDisplay()
+    {
+        return new Dictionary<Color, List<Vector3>>()
+        {
+            { Color.magenta, new List<Vector3>()
+                {
+                    transform.position, target
+                }
+            },
+            
+            { Color.blue, new List<Vector3>()
+                {
+                    transform.position, transform.position + (_targetDirection.normalized * 4)
+                }
+            }
+        };
     }
 
     private void OnDrawGizmos()

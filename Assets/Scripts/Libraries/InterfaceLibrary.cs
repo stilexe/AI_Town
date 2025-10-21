@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public interface ISteering
@@ -8,7 +9,7 @@ public interface ISteering
     /// <returns>[torque, force]</returns>
     Vector3[] CalculateMovement();
 
-    bool IsNeeded();
+    Dictionary<Color,List<Vector3>> LineRenderDisplay();
 }
 
 public interface IDamageable
@@ -16,4 +17,9 @@ public interface IDamageable
     int Health { get; }
     void TakeDamage(int damage);
     void Die(); 
+}
+
+public interface IInteractable
+{
+    void Interact(GameObject interacter);
 }

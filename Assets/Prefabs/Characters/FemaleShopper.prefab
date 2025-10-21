@@ -13,9 +13,13 @@ GameObject:
   - component: {fileID: 6090200102540303136}
   - component: {fileID: 2533965731401101701}
   - component: {fileID: 3204662889265200495}
+  - component: {fileID: 2141399392141871448}
+  - component: {fileID: 5835108755722366873}
+  - component: {fileID: 2148195168696506049}
+  - component: {fileID: 7371197164993982938}
   m_Layer: 9
   m_Name: FemaleShopper
-  m_TagString: Untagged
+  m_TagString: Shopper
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -30,8 +34,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 7020170392597256281}
   m_Father: {fileID: 0}
@@ -82,10 +86,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.25691062
-  m_Height: 0.8298486
+  m_Radius: 0.31236616
+  m_Height: 0.82984865
   m_Direction: 1
-  m_Center: {x: 0, y: 0.3530008, z: -0.03076148}
+  m_Center: {x: 0.0072046123, y: 0.35300082, z: -0.035356008}
 --- !u!114 &2533965731401101701
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -98,8 +102,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75eea7d199ac93c44984d514a59e1a9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 5266784782622427296}
-  speed: {x: 0, y: 0, z: 4}
+  speed: 5
+  walking: 1
 --- !u!114 &3204662889265200495
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -112,14 +116,77 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e95e9d5675be7e409894090559f64b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 5266784782622427296}
-  observableMask:
+  avoidMask:
     serializedVersion: 2
-    m_Bits: 832
-  avoidRange: 1.1
-  turnRange: 0.2
-  fieldOfView: 110
-  maxRays: 6
+    m_Bits: 2880
+  avoidRange: 3
+  turnRange: 0.6
+  slowSpeed: 2
+  maxDropHeight: 3
+--- !u!114 &2141399392141871448
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5120811348706434879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38c29bb727b8dcb44b1fabbff507293e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rb: {fileID: 5266784782622427296}
+--- !u!114 &5835108755722366873
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5120811348706434879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3a00bb1b81b1f347a97e9d72928f621, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fieldOfView: 160
+  reachDistance: 0
+  maxRays: 8
+  eyeLevel: 2
+  floor:
+    serializedVersion: 2
+    m_Bits: 128
+--- !u!114 &2148195168696506049
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5120811348706434879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 614078cc1e98ce640ade2704fa2ad125, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxNeighbours: 20
+  searchRadius: 5
+  charLayer:
+    serializedVersion: 2
+    m_Bits: 512
+  alignForce: 1
+  separateForce: 2
+  cohesionForce: 2
+--- !u!114 &7371197164993982938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5120811348706434879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fdf9ca8c77a1a44a8cc9cafff34e187, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7414647622599983026
 PrefabInstance:
   m_ObjectHideFlags: 0
