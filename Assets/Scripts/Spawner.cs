@@ -7,7 +7,7 @@ public class Spawner : MonoBehaviour
 
     public int spawnCount;
 
-    public Vector3 topCorner, bottomCorner; 
+    public Vector3 topCorner, bottomCorner;
     
     void Start()
     {
@@ -15,7 +15,7 @@ public class Spawner : MonoBehaviour
         {
             for (int i = 0; i < spawnCount; i++)
             { 
-                Instantiate(go, new Vector3(Random.Range(topCorner.x, bottomCorner.x), 2 , Random.Range(topCorner.z, bottomCorner.z)), Quaternion.identity);
+                Instantiate(go, new Vector3(Random.Range(topCorner.x, bottomCorner.x), 2 , Random.Range(topCorner.z, bottomCorner.z)), Quaternion.Euler(new Vector3(0, Random.Range(0, 360), 0)));
             }
         }
     }

@@ -8,12 +8,10 @@ public class NeighbourTracker : MonoBehaviour, ISteering
 {
     private Collider[] _neighbourColliders;
     private List<Collider> _neighbours;
-
-    [SerializeField] private Rigidbody rb;
+    
     [SerializeField] private int maxNeighbours;
     [SerializeField] private float searchRadius;
     [SerializeField] private LayerMask charLayer;
-    [SerializeField] private float eyeLevel;
 
     //[SerializeField] private bool align;
     [SerializeField] private float alignForce;
@@ -35,7 +33,7 @@ public class NeighbourTracker : MonoBehaviour, ISteering
         _neighbourColliders = new Collider[maxNeighbours];
     }
 
-    public bool IsNeeded()
+    public Vector3[] CalculateMovement()
     {
         _neighbourColliders = Physics.OverlapSphere(transform.position + (transform.forward * .2f), searchRadius, charLayer);
 
@@ -43,21 +41,19 @@ public class NeighbourTracker : MonoBehaviour, ISteering
         {
             if (c == GetComponent<Collider>()) continue; 
             
-            //check each neighbour with raycast at eye level to see if they are blocked, remove if they are 
+            //todo: check each neighbour with raycast at eye level to see if they are blocked, remove if they are 
             
             Debug.DrawLine(transform.position + (Vector3.up * .5f), c.transform.position + (Vector3.up * .5f), Color.yellow);
         }
 
         if (_neighbourColliders.Length <= 1)
         {
-            return false;
+            return new Vector3[]
+            { 
+                Vector3.zero, Vector3.zero
+            };
         }
-
-        return true;
-    }
-
-    public Vector3[] CalculateMovement()
-    {
+        
         _torque = Vector3.zero;
         _force = Vector3.zero;
         
@@ -93,6 +89,52 @@ public class NeighbourTracker : MonoBehaviour, ISteering
         // rb.AddForce(_cohesionDirection * cohesionForce);
         
         return new Vector3[] { _torque, _force };
+    }
+
+    public Dictionary<Color,List<Vector3>> LineRenderDisplay()
+    {
+        if (_neighbourColliders.Length <= 1)
+        {
+            return new Dictionary<Color, List<Vector3>>();
+        }
+        return new Dictionary<Color, List<Vector3>>()
+        {
+            //align line
+            {Color.blue, 
+                new List<Vector3>()
+                {
+                    transform.position, transform.position + (_alignDirection * alignForce)
+                }
+                
+            },
+            //seperate line 
+            {Color.red, 
+                new List<Vector3>()
+                {
+                    transform.position, transform.position + (_separateDirection * separateForce)
+                }
+                
+            },
+            //cohese line 
+            {Color.green, 
+                new List<Vector3>()
+                {
+                    transform.position, transform.position + (_cohesionDirection * cohesionForce)
+                }
+                
+            }
+        };
+
+    }
+    
+    public List<string> LineRenderDescription()
+    {
+        return new List<string>()
+        {
+            "Blue (alignment): shows where we are trying to rotate to align with neighbours",
+            "Green (cohesion): shows the direction we are trying towards neighbours",
+            "Red (separation) shows the direction we are trying being pushed away from neighbours"
+        };
     }
 
     private void OnDrawGizmos()

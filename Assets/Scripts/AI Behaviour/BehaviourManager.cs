@@ -13,9 +13,9 @@ public class BehaviourManager : MonoBehaviour
 
     private void OnEnable()
     {
-        foreach (Component c in GetComponents(typeof(ISteering)))
+        foreach (ISteering s in GetComponents<ISteering>())
         {
-            _behaviours.Add(c as ISteering);
+            _behaviours.Add(s);
         }
     }
 
@@ -26,8 +26,6 @@ public class BehaviourManager : MonoBehaviour
         
         foreach (ISteering behaviour in _behaviours)
         {
-            if(!behaviour.IsNeeded()) continue;
-            
             _torFor = behaviour.CalculateMovement();
 
             _torque += _torFor[0];

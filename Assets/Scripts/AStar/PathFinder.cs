@@ -75,7 +75,7 @@ public class PathFinder : MonoBehaviour
             {
                 if (_currentNode.pathCost > n.pathCost || 
                     Mathf.Approximately(_currentNode.pathCost, n.pathCost) && 
-                    _scanner.DistanceBetweenNodes(n, _endNode) < _scanner.DistanceBetweenNodes(_currentNode, _endNode))
+                    Vector3.Distance(n.location, _endNode.location) < Vector3.Distance(_currentNode.location, _endNode.location))
                 {
                     _currentNode = n;
                 }
@@ -96,13 +96,12 @@ public class PathFinder : MonoBehaviour
             {
                 if (n.isBlocked || _closed.Contains(n))
                 {
-                    Debug.Log("Blocked or closed node.");
+                    //Debug.Log("Blocked or closed node.");
                     continue;
                 }
-            
-                //uses distance first because neighbours don't need the extra calculations
+                
                 scanningPathCost = (n.distanceFromStart + Vector3.Distance(_currentNode.location, n.location)) +
-                                   _scanner.DistanceBetweenNodes(n, _endNode);
+                                   Vector3.Distance(n.location, _endNode.location);
 
                 //if the distance is smaller than the distance already there, or if the node isn't in open 
                 if (scanningPathCost < n.pathCost || !_open.Contains(n))
@@ -126,6 +125,7 @@ public class PathFinder : MonoBehaviour
             
         _path.Reverse();
         
+        _scanning = false;
         return _path;
     }
     

@@ -35,7 +35,15 @@ public class WorldScanner : MonoBehaviour
         }
         
         _grid = new Node[(int)groundSize.x, (int)groundSize.z];
+
+        EventManager.OnObjectDestroyed += ScanWorld;
+        
         GridSetUp();
+    }
+
+    private void OnDisable()
+    {
+        EventManager.OnObjectDestroyed -= ScanWorld;
     }
 
     private void GridSetUp()
@@ -44,7 +52,9 @@ public class WorldScanner : MonoBehaviour
         {
             for (int j = 0; j < groundSize.z; j++)
             {
-                _grid[i, j] = new Node(){location = new Vector3(transform.position.x + (i * gridSize.x), 0, transform.position.z + (j * gridSize.y)), nodeCoord1 = i, nodeCoord2 = j};
+                _grid[i, j] = new Node(){
+                    location = new Vector3(transform.position.x + (i * gridSize.x), 0, transform.position.z + (j * gridSize.y)), 
+                    nodeCoord1 = i, nodeCoord2 = j};
             }
         }
         
@@ -53,6 +63,8 @@ public class WorldScanner : MonoBehaviour
 
     public void ScanWorld()
     {
+        Debug.Log("Scanning world");
+        
         foreach (Node n in _grid)
         {
             // check if node is blocked 

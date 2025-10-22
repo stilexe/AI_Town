@@ -1,75 +1,107 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Avoid : MonoBehaviour, ISteering 
 {
-    [SerializeField] private LayerMask observableMask;
-    [SerializeField] private float avoidRange;
-    [SerializeField] private float turnRange;
-    [SerializeField] private float fieldOfView; 
-    [SerializeField] private int maxRays;
+    [SerializeField] private LayerMask avoidMask;
+    [SerializeField] private int avoidRange;
+    [SerializeField] private float turnStrength;
     [SerializeField] private float slowSpeed;
+    
+    private Vector3 _avoidLocation;
+    private float _avoidDistance;
 
-    private float _rayAngle;
-    private int _rayCount;
-    private Vector3 _startDirection;
+    private Vector3 _turnDirection;
 
-    private Vector3 _torque;
-    private Vector3 _force;
+    private Look _look;
 
-    public bool IsNeeded()
+    private void Start()
     {
-        return true; 
+        _look = GetComponent<Look>();
     }
 
     public Vector3[] CalculateMovement()
     {
-        _torque = Vector3.zero;
-        _force = Vector3.zero;
-        
-        // if (rb.linearVelocity.magnitude < .4)
-        // {
-        //     rb.AddRelativeTorque(0, turnRange ,0);
-        // }
-
-        _rayCount = maxRays; //TODO: change the number of rays based on distance from camera (maybe) 
-        _rayAngle = 0;
-        _startDirection = Quaternion.Euler(0, -fieldOfView / 2, 0) * transform.forward;
-
-        for (int i = 0; i < _rayCount; i++)
+        if (_look == null)
         {
-            Debug.DrawRay(transform.position, Quaternion.Euler(0, _rayAngle, 0) * _startDirection, Color.cyan);
-            
-            if (Physics.Raycast(transform.position, Quaternion.Euler(0, _rayAngle, 0) * _startDirection, out RaycastHit hit, avoidRange,
-                    observableMask))
-            {
-                //Debug.Log(name + "raycast hit" + hit.collider.name);
-
-                //more back force closer the hit is 
-                _force = Vector3.back * (slowSpeed); //todo: smaller hit distance bigger push back maths 
-
-                //turn away from object 
-                if (i > _rayCount / 2) //go right
-                {
-                    _torque -= new Vector3(0, turnRange * (avoidRange / hit.distance) ,0); // turn strength bigger the closer the object is 
-                }
-                else  //go left 
-                {
-                    _torque += new Vector3(0, turnRange * (avoidRange / hit.distance) ,0);
-                }
-
-                break;
-            }
-
-            _rayAngle += fieldOfView / _rayCount; 
+            return new Vector3[]
+            { 
+                Vector3.zero, Vector3.zero
+            };
         }
         
-        return new Vector3[]{_torque, _force}; 
+        _avoidLocation = Vector3.zero;
+
+        foreach (RaycastHit hit in _look.EdgeCheck())
+        {
+            if (hit.collider is null)
+            {
+                //Debug.Log("Avoiding cliff");
+
+                _avoidLocation = transform.position + (transform.forward * 2);
+                _avoidDistance = Vector3.Distance(_avoidLocation, transform.position);
+
+            }
+        }
+        
+        foreach (RaycastHit hit in _look.LookAround(avoidMask))
+        {
+            if (hit.distance < avoidRange)
+            {
+                _avoidLocation = hit.point;
+                _avoidDistance = hit.distance;
+            }
+        }
+
+        if (_avoidLocation == Vector3.zero)
+        {
+            return new Vector3[]
+            { 
+                Vector3.zero, Vector3.zero
+            };
+        }
+        
+        //turn away from object 
+        // turn and slow strength bigger the closer the object is 
+        if (Vector3.SignedAngle(transform.forward, _avoidLocation - transform.position, transform.up) > 0)
+        {
+            _turnDirection = new(0, -turnStrength * (_avoidDistance / avoidRange), 0); //left turn 
+        }
+        else
+        {
+            _turnDirection = new(0, turnStrength * (_avoidDistance / avoidRange), 0); //right turn 
+        }
+        
+        return new Vector3[]
+        { 
+            _turnDirection, 
+            Vector3.back * (slowSpeed * (avoidRange / _avoidDistance))
+        };
     }
 
-    // private void OnDrawGizmos()
-    // {
-    //     Gizmos.color = Color.cyan;
-    //     Gizmos.DrawWireSphere(transform.position, avoidRange);
-    // }
+    public Dictionary<Color, List<Vector3>> LineRenderDisplay()
+    {
+        if (_avoidLocation == Vector3.zero)
+        {
+            return new Dictionary<Color, List<Vector3>>();
+        }
+        
+        return new Dictionary<Color, List<Vector3>>()
+        {
+            { Color.red, new List<Vector3>()
+                {
+                    transform.position, _avoidLocation
+                }
+            },
+        };
+    }
+    
+    public List<string> LineRenderDescription()
+    {
+        return new List<string>()
+        {
+            "Red: leads to where the object to avoid was detected.",
+        };
+    }
 }

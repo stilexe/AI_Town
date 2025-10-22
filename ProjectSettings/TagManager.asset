@@ -4,7 +4,14 @@
 TagManager:
   serializedVersion: 3
   tags:
-  - Freezer
+  - Floor
+  - Rioter
+  - Townfolk
+  - Shopper
+  - Doorknocker
+  - House
+  - Door
+  - Employee
   layers:
   - Default
   - TransparentFX
@@ -17,7 +24,7 @@ TagManager:
   - Interactable
   - Character
   - Door
-  - 
+  - House
   - 
   - 
   - 
