@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 1016172507971325616}
   - component: {fileID: 3992216788537971710}
   m_Layer: 9
-  m_Name: Doorknocker
+  m_Name: AIDoorknocker
   m_TagString: Doorknocker
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

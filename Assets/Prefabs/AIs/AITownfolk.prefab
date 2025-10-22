@@ -18,7 +18,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2373166432376064965, guid: 501a353b041c63f41a3c01e11df757f1, type: 3}
       propertyPath: avoidMask.m_Bits
-      value: 2368
+      value: 2880
       objectReference: {fileID: 0}
     - target: {fileID: 2885121368869609012, guid: 501a353b041c63f41a3c01e11df757f1, type: 3}
       propertyPath: m_Name
@@ -31,6 +31,10 @@ PrefabInstance:
     - target: {fileID: 5627659924541930539, guid: 501a353b041c63f41a3c01e11df757f1, type: 3}
       propertyPath: m_UseGravity
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6279455471141627863, guid: 501a353b041c63f41a3c01e11df757f1, type: 3}
+      propertyPath: speed
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7594679568225510510, guid: 501a353b041c63f41a3c01e11df757f1, type: 3}
       propertyPath: m_LocalPosition.x
@@ -97,11 +101,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 614078cc1e98ce640ade2704fa2ad125, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxNeighbours: 7
-  searchRadius: 10
+  maxNeighbours: 20
+  searchRadius: 6
   charLayer:
     serializedVersion: 2
     m_Bits: 512
-  alignForce: 1
-  separateForce: 1.5
-  cohesionForce: 1
+  alignForce: 3
+  separateForce: 12
+  cohesionForce: 2

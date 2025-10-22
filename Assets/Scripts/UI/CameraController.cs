@@ -51,6 +51,7 @@ public class CameraController : MonoBehaviour
 
     public void FollowRandom(string targetTag)
     {
+        Debug.Log("Finding random " + targetTag);
         GameObject[] characters = GameObject.FindGameObjectsWithTag(targetTag);
         Follow(characters[Random.Range(0, characters.Length)]);
     }
@@ -79,6 +80,7 @@ public class CameraController : MonoBehaviour
     private void Unfollow()
     {
         _following = false;
+        _followDisplay.StopDisplay();
         transform.parent = null;
     }
 

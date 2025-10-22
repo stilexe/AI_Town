@@ -49,6 +49,12 @@ public class BehaviourDisplay : MonoBehaviour
         _displayOn = true;
     }
 
+    public void StopDisplay()
+    {
+        _displayOn = false;
+        ClearDisplay();
+    }
+
     public void NextBehaviour()
     {
         ClearDisplay();

@@ -26,14 +26,7 @@ public class House : MonoBehaviour, IDamageable
 
         if (_health <= 0)
         {
-            Die();
+            Town.Instance.ObjectDestroyed(gameObject);
         }
-    }
-
-    public void Die()
-    {
-        EventManager.InvokeObjectDestroyed(transform.position);
-            
-        Destroy(gameObject);
     }
 }

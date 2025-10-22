@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -39,5 +40,20 @@ public class Town : MonoBehaviour
     public GameObject CnrStoreDoor()
     {
         return cnrStoreDoor;
+    }
+
+    // object needs to be destroyed before the event is called, can't be done on a script attached to the object 
+    public void ObjectDestroyed(GameObject destroyed)
+    {
+        Destroy(destroyed);
+        StartCoroutine(EventWait());
+        //EventManager.InvokeObjectDestroyed();
+    }
+
+    private IEnumerator EventWait()
+    {
+        yield return new WaitForSeconds(1);
+        
+        EventManager.InvokeObjectDestroyed();
     }
 }

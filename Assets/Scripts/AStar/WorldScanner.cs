@@ -52,7 +52,9 @@ public class WorldScanner : MonoBehaviour
         {
             for (int j = 0; j < groundSize.z; j++)
             {
-                _grid[i, j] = new Node(){location = new Vector3(transform.position.x + (i * gridSize.x), 0, transform.position.z + (j * gridSize.y)), nodeCoord1 = i, nodeCoord2 = j};
+                _grid[i, j] = new Node(){
+                    location = new Vector3(transform.position.x + (i * gridSize.x), 0, transform.position.z + (j * gridSize.y)), 
+                    nodeCoord1 = i, nodeCoord2 = j};
             }
         }
         
@@ -61,23 +63,8 @@ public class WorldScanner : MonoBehaviour
 
     public void ScanWorld()
     {
-        foreach (Node n in _grid)
-        {
-            // check if node is blocked 
-            if (Physics.CheckBox(n.location, gridSize / 2, Quaternion.identity, blockedLayers))
-            {
-                n.isBlocked = true;
-            }
-            else
-            {
-                n.isBlocked = false;
-            }
-        }
-    }
-
-    public void ScanWorld(Vector3 position)
-    {
-        //todo: change to find closest node to position and scan surroundings 
+        Debug.Log("Scanning world");
+        
         foreach (Node n in _grid)
         {
             // check if node is blocked 

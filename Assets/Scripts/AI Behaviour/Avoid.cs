@@ -94,12 +94,6 @@ public class Avoid : MonoBehaviour, ISteering
                     transform.position, _avoidLocation
                 }
             },
-            
-            { Color.blue, new List<Vector3>()
-                {
-                    transform.position, transform.position + (_turnDirection * 4)
-                }
-            }
         };
     }
     
@@ -108,7 +102,6 @@ public class Avoid : MonoBehaviour, ISteering
         return new List<string>()
         {
             "Red: leads to where the object to avoid was detected.",
-            "Blue: shows where we are trying to rotate to"
         };
     }
 }

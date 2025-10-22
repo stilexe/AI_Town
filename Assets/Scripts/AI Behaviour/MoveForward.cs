@@ -27,7 +27,7 @@ public class MoveForward : MonoBehaviour, ISteering
         {
             { Color.green, new List<Vector3>()
                 {
-                    transform.position, transform.position + transform.forward * 4
+                    transform.position, transform.position + transform.forward * 6
                 }
             },
         };

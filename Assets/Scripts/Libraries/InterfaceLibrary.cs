@@ -17,7 +17,6 @@ public interface ISteering
 public interface IDamageable
 {
     void TakeDamage(int damage);
-    void Die();
 }
 
 public interface IInteractable
