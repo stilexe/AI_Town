@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Avoid : MonoBehaviour, ISteering 
@@ -15,10 +16,40 @@ public class Avoid : MonoBehaviour, ISteering
     private Vector3 _turnDirection;
 
     private Look _look;
+    private List<GameObject> _exceptions = new List<GameObject>();
+
+    private int _currentAvoidRange; 
 
     private void Start()
     {
         _look = GetComponent<Look>();
+        _currentAvoidRange = avoidRange;
+    }
+
+    public void AddException(GameObject except)
+    {
+        if (!_exceptions.Contains(except))
+        {
+            _exceptions.Add(except);
+        }
+    }
+
+    public void RemoveException(GameObject except)
+    {
+        if (_exceptions.Contains(except))
+        {
+            _exceptions.Remove(except);
+        }
+    }
+
+    public void AddToRange(int add)
+    {
+        _currentAvoidRange += add;
+    }
+
+    public void ResetRange()
+    {
+        _currentAvoidRange = avoidRange;
     }
 
     public Vector3[] CalculateMovement()
@@ -47,7 +78,7 @@ public class Avoid : MonoBehaviour, ISteering
         
         foreach (RaycastHit hit in _look.LookAround(avoidMask))
         {
-            if (hit.distance < avoidRange)
+            if (hit.distance < _currentAvoidRange && !_exceptions.Contains(hit.transform.gameObject))
             {
                 _avoidLocation = hit.point;
                 _avoidDistance = hit.distance;
@@ -66,11 +97,11 @@ public class Avoid : MonoBehaviour, ISteering
         // turn and slow strength bigger the closer the object is 
         if (Vector3.SignedAngle(transform.forward, _avoidLocation - transform.position, transform.up) > 0)
         {
-            _turnDirection = new(0, -turnStrength * (_avoidDistance / avoidRange), 0); //left turn 
+            _turnDirection = new(0, -turnStrength * (_avoidDistance / _currentAvoidRange), 0); //left turn 
         }
         else
         {
-            _turnDirection = new(0, turnStrength * (_avoidDistance / avoidRange), 0); //right turn 
+            _turnDirection = new(0, turnStrength * (_avoidDistance / _currentAvoidRange), 0); //right turn 
         }
         
         return new Vector3[]

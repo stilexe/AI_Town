@@ -12,6 +12,9 @@ TagManager:
   - House
   - Door
   - Employee
+  - Shopping Cart
+  - Shopping Shelf
+  - Cashier
   layers:
   - Default
   - TransparentFX

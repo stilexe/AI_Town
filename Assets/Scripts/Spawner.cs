@@ -19,4 +19,17 @@ public class Spawner : MonoBehaviour
             }
         }
     }
+
+    /// <summary>
+    /// Spawn exactly one of each to spawn object 
+    /// </summary>
+    public void SpawnOne()
+    {
+        foreach (GameObject go in toSpawn)
+        {
+            Instantiate(go,
+                new Vector3(Random.Range(topCorner.x, bottomCorner.x), 2, Random.Range(topCorner.z, bottomCorner.z)),
+                Quaternion.Euler(new Vector3(0, Random.Range(0, 360), 0)));
+        }
+    }
 }

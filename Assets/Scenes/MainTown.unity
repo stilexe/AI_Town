@@ -448,6 +448,7 @@ MonoBehaviour:
   followRotation: {x: 0.38268346, y: 0, z: 0, w: 0.9238795}
   displayHeader: {fileID: 150695153}
   descriptionPanel: {fileID: 368811437}
+  boolDisplay: {fileID: 0}
 --- !u!114 &6180413
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23159,7 +23160,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1410288203}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d1c97fdaa8d13ca47909251ad17654d7, type: 3}
   m_Name: 

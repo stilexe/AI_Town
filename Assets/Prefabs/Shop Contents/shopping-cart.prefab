@@ -56,6 +56,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 5e0eac2106daa8448b34b69920b1d355, type: 3}
+      propertyPath: m_TagString
+      value: Shopping Cart
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -63,6 +67,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 5e0eac2106daa8448b34b69920b1d355, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8517131413151620879}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 5e0eac2106daa8448b34b69920b1d355, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -657242900542761805}
   m_SourcePrefab: {fileID: 100100000, guid: 5e0eac2106daa8448b34b69920b1d355, type: 3}
 --- !u!1 &8001693144968451963 stripped
 GameObject:
@@ -90,3 +97,15 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.30000007, y: 0.39055958, z: 0.478915}
   m_Center: {x: 0, y: 0.19527979, z: -0.014457453}
+--- !u!114 &-657242900542761805
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8001693144968451963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b03eff66ebb40f4c86ab7a9b112b8f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -41,8 +41,12 @@ public class PathFollow : MonoBehaviour
     {
         if (_path == null || _path.Count == 0) return; 
         
+        //Debug.Log(Vector3.Distance(transform.position, _path[_currentIndex].location));
+        
         if (Vector3.Distance(transform.position, _path[_currentIndex].location) < distanceBeforeWaypointChange)
         {
+            Debug.Log("next path point");
+            
             // end of path
             if (_currentIndex == _path.Count - 1)
             {

@@ -8,7 +8,9 @@ public class CameraController : MonoBehaviour
     [SerializeField] private Vector3 followPosition;
     [SerializeField] private Quaternion followRotation;
     [SerializeField] private TextMeshProUGUI displayHeader;
-    [SerializeField] private GameObject descriptionPanel; 
+    [SerializeField] private GameObject descriptionPanel;
+
+    [SerializeField] private AIBoolDisplay boolDisplay; 
     
 
     private bool _following;
@@ -53,7 +55,22 @@ public class CameraController : MonoBehaviour
     {
         Debug.Log("Finding random " + targetTag);
         GameObject[] characters = GameObject.FindGameObjectsWithTag(targetTag);
-        Follow(characters[Random.Range(0, characters.Length)]);
+        
+        GameObject randomCharacter = characters[Random.Range(0, characters.Length)];
+        Follow(randomCharacter);
+
+        switch (targetTag)
+        {
+            case "Shopper":
+                boolDisplay.DisplayShopper(randomCharacter.GetComponent<ShopperSensor>());
+                break; 
+            case "Rioter":
+                boolDisplay.DisplayRioter(randomCharacter.GetComponent<RioterSensor>());
+                break;
+            case "Doorknocker":
+                boolDisplay.DisplayKnocker(randomCharacter.GetComponent<DoorknockerSensor>());
+                break; 
+        }
     }
 
     public void Follow(GameObject target)

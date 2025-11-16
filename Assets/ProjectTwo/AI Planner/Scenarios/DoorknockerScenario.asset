@@ -1,0 +1,77 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2f22e7053ea04ed0922308786facc8c, type: 3}
+  m_Name: DoorknockerScenario
+  m_EditorClassIdentifier: 
+  conditions:
+    list:
+    - id: 0
+      name: AtDoor
+    - id: 1
+      name: SeesDoor
+    - id: 2
+      name: Knocked
+  actions:
+  - name: LookForDoor
+    isDefault: 1
+    state: {fileID: 8676088682394127575, guid: 89e8644e7a6498b4eb7684746dba1572, type: 3}
+    cost: 0
+    position: {x: 349, y: 276}
+    pre:
+    - id: 1
+      value: 0
+    post:
+    - id: 1
+      value: 1
+  - name: GoToDoor
+    isDefault: 0
+    state: {fileID: 13743608491101598, guid: c7eebac27c9570c40b17f35657ecae7c, type: 3}
+    cost: 0
+    position: {x: 592, y: 276}
+    pre:
+    - id: 1
+      value: 1
+    - id: 0
+      value: 0
+    post:
+    - id: 0
+      value: 1
+  - name: Knock
+    isDefault: 0
+    state: {fileID: 1452504917510270086, guid: 6bb1e31d700c1a44589d1601f5a84e58, type: 3}
+    cost: 0
+    position: {x: 848.0001, y: 273.2}
+    pre:
+    - id: 0
+      value: 1
+    - id: 2
+      value: 0
+    post:
+    - id: 2
+      value: 1
+  goals:
+  - name: Knocked
+    isDefault: 1
+    position: {x: 1100.7999, y: 275.59998}
+    conditions:
+    - id: 2
+      value: 1
+  worldStates:
+  - position: {x: 237, y: 44}
+    isAutoUpdate: 0
+    list:
+    - id: 0
+      value: 0
+    - id: 1
+      value: 0
+    - id: 2
+      value: 0

@@ -79,13 +79,12 @@ public class TurnTowards : MonoBehaviour, ISteering
 
         return new Vector3[] {_torque, _force};
     }
-
+    
     public void ChangeTarget(Vector3 newTarget, bool pathPoint = false)
     {
+        //Debug.Log("Target changed");
         activeTarget = true;
-
         _pathFollow = pathPoint;
-        
         target = newTarget;
     }
 
@@ -117,7 +116,7 @@ public class TurnTowards : MonoBehaviour, ISteering
         return new List<string>()
         {
             "Green: shows where we are trying to rotate to face the location",
-            "Magenta: connects to the location we are turning towards",
+            "Blue: connects to the location we are turning towards",
         };
     }
 

@@ -7,9 +7,14 @@ public class BehaviourManager : MonoBehaviour
     private List<ISteering> _behaviours = new List<ISteering>();
 
     [SerializeField] private Rigidbody rb;
+    [SerializeField] private float defaultSpeed; 
 
     private Vector3 _torque, _force; 
     private Vector3[] _torFor;
+
+    private GameObject _target;
+
+    private float _speed;
 
     private void OnEnable()
     {
@@ -35,5 +40,15 @@ public class BehaviourManager : MonoBehaviour
         rb.AddRelativeForce(_force);
         rb.AddRelativeTorque(_torque);
 
+    }
+
+    public void NewTarget(GameObject newTarget)
+    {
+        _target = newTarget;
+    }
+
+    public GameObject GetTarget()
+    {
+        return _target;
     }
 }

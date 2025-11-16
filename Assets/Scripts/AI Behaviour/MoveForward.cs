@@ -4,9 +4,26 @@ using UnityEngine;
 
 public class MoveForward : MonoBehaviour, ISteering
 {
-    [SerializeField] private float speed;
+    [SerializeField] private float defaultSpeed;
 
     [SerializeField] private bool walking = true;
+
+    private float _speed;
+
+    private void Start()
+    {
+        _speed = defaultSpeed;
+    }
+
+    public void NewSpeed(float newSpeed)
+    {
+        _speed = defaultSpeed * newSpeed;
+    }
+
+    public void Walking(bool ifWalking)
+    {
+        walking = ifWalking;
+    }
 
     public Vector3[] CalculateMovement()
     {
@@ -18,7 +35,7 @@ public class MoveForward : MonoBehaviour, ISteering
             };
         }
         
-        return new Vector3[] {Vector3.zero, Vector3.forward * speed}; 
+        return new Vector3[] {Vector3.zero, Vector3.forward * _speed}; 
     }
 
     public Dictionary<Color, List<Vector3>> LineRenderDisplay()

@@ -8,6 +8,8 @@ public class House : MonoBehaviour, IDamageable
     [SerializeField] private TextMeshProUGUI healthText;
     private int _health;
     
+    public event IDamageable.DestroyedEvent OnDestroyed;
+    
     private void Start()
     {
         _health = maxHealth;
@@ -17,7 +19,7 @@ public class House : MonoBehaviour, IDamageable
     {
         healthText.text = _health + "/" + maxHealth;
     }
-    
+
     public void TakeDamage(int damage)
     {
         Debug.Log("Taking damage");
@@ -26,6 +28,7 @@ public class House : MonoBehaviour, IDamageable
 
         if (_health <= 0)
         {
+            OnDestroyed?.Invoke();
             Town.Instance.ObjectDestroyed(gameObject);
         }
     }

@@ -1,0 +1,81 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2f22e7053ea04ed0922308786facc8c, type: 3}
+  m_Name: RioterScenario
+  m_EditorClassIdentifier: 
+  conditions:
+    list:
+    - id: 0
+      name: HasTarget
+    - id: 1
+      name: TargetDestroyed
+    - id: 2
+      name: AtTarget
+  actions:
+  - name: DestroyTarget
+    isDefault: 0
+    state: {fileID: 5030497668775767327, guid: fec6a5af79b48464cb96fb168424b274, type: 3}
+    cost: 0
+    position: {x: 924.8001, y: 346.80005}
+    pre:
+    - id: 0
+      value: 1
+    - id: 2
+      value: 1
+    post:
+    - id: 1
+      value: 1
+    - id: 0
+      value: 0
+    - id: 2
+      value: 0
+  - name: SearchForTarget
+    isDefault: 1
+    state: {fileID: 5398683980565236352, guid: 6d59cc36bc909ef4981143c1f8356052, type: 3}
+    cost: 0
+    position: {x: 285.60004, y: 290.8}
+    pre:
+    - id: 0
+      value: 0
+    post:
+    - id: 0
+      value: 1
+  - name: MoveToTarget
+    isDefault: 0
+    state: {fileID: 6311352423391310080, guid: 38d84d6c3ac335d44945baeff8080fc3, type: 3}
+    cost: 0
+    position: {x: 671.1999, y: 389.19998}
+    pre:
+    - id: 0
+      value: 1
+    - id: 2
+      value: 0
+    post:
+    - id: 2
+      value: 1
+  goals:
+  - name: TargetDestroyed
+    isDefault: 1
+    position: {x: 1210.3999, y: 406}
+    conditions:
+    - id: 1
+      value: 1
+  worldStates:
+  - position: {x: 229.59985, y: 97.20001}
+    isAutoUpdate: 0
+    list:
+    - id: 0
+      value: 0
+    - id: 1
+      value: 0
+    - id: 2
+      value: 0

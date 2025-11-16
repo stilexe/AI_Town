@@ -16,6 +16,8 @@ public interface ISteering
 
 public interface IDamageable
 {
+    delegate void DestroyedEvent();
+    event DestroyedEvent OnDestroyed;
     void TakeDamage(int damage);
 }
 

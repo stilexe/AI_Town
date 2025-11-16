@@ -1,0 +1,185 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2f22e7053ea04ed0922308786facc8c, type: 3}
+  m_Name: ShoppingScenario
+  m_EditorClassIdentifier: 
+  conditions:
+    list:
+    - id: 0
+      name: FullCart
+    - id: 1
+      name: HasCart
+    - id: 2
+      name: Paid
+    - id: 3
+      name: SeeCart
+    - id: 4
+      name: SeeShelf
+    - id: 5
+      name: FrontOfQueue
+    - id: 6
+      name: SeeCashier
+    - id: 7
+      name: Queuing
+    - id: 8
+      name: LeftShop
+  actions:
+  - name: GoToCart
+    isDefault: 0
+    state: {fileID: 7050060106111163526, guid: 57389e16aa54f454396e0bfd70767f3d, type: 3}
+    cost: 0
+    position: {x: 696, y: 478}
+    pre:
+    - id: 3
+      value: 1
+    - id: 1
+      value: 0
+    post:
+    - id: 1
+      value: 1
+  - name: GoToShelf
+    isDefault: 0
+    state: {fileID: 7787510142045476874, guid: 9e836749dd0297a43ac166f0f9e14185, type: 3}
+    cost: 0
+    position: {x: 1142, y: 479}
+    pre:
+    - id: 4
+      value: 1
+    - id: 1
+      value: 1
+    - id: 0
+      value: 0
+    post:
+    - id: 4
+      value: 0
+    - id: 0
+      value: 1
+  - name: LookForCart
+    isDefault: 1
+    state: {fileID: 1724617260425943348, guid: 47094e20c9ab57545b91ef373eb9dd73, type: 3}
+    cost: 0
+    position: {x: 474, y: 475}
+    pre:
+    - id: 3
+      value: 0
+    post:
+    - id: 3
+      value: 1
+  - name: LookForShelf
+    isDefault: 0
+    state: {fileID: 852302804724539038, guid: 37b723b74b0b9714e882171824976625, type: 3}
+    cost: 0
+    position: {x: 919, y: 473}
+    pre:
+    - id: 4
+      value: 0
+    - id: 1
+      value: 1
+    - id: 0
+      value: 0
+    post:
+    - id: 4
+      value: 1
+  - name: LookForCashier
+    isDefault: 0
+    state: {fileID: 7539047246810419057, guid: 7ba41618b0934c149ae7e9dccb98015b, type: 3}
+    cost: 0
+    position: {x: 238, y: 738}
+    pre:
+    - id: 0
+      value: 1
+    - id: 6
+      value: 0
+    post:
+    - id: 6
+      value: 1
+  - name: Queue
+    isDefault: 0
+    state: {fileID: 8520546474309407141, guid: 33f638b335e9c5a42803fe33c41ebfee, type: 3}
+    cost: 0
+    position: {x: 701, y: 726}
+    pre:
+    - id: 5
+      value: 0
+    - id: 7
+      value: 1
+    - id: 0
+      value: 1
+    post:
+    - id: 5
+      value: 1
+  - name: Pay
+    isDefault: 0
+    state: {fileID: 4661086742503937822, guid: 0b31fdcae67bde843852241ed34113e2, type: 3}
+    cost: 0
+    position: {x: 923, y: 738}
+    pre:
+    - id: 5
+      value: 1
+    - id: 2
+      value: 0
+    post:
+    - id: 2
+      value: 1
+  - name: GoToQueue
+    isDefault: 0
+    state: {fileID: 6515218817890682175, guid: 0fc1c93f7410cc44f97497aa8a654c76, type: 3}
+    cost: 0
+    position: {x: 468, y: 741}
+    pre:
+    - id: 6
+      value: 1
+    - id: 0
+      value: 1
+    post:
+    - id: 7
+      value: 1
+  - name: LeavingShop
+    isDefault: 0
+    state: {fileID: 7508537870869771809, guid: a390e1832e589fc4eaf448eb117f12f7, type: 3}
+    cost: 0
+    position: {x: 1218.4, y: 755.19995}
+    pre:
+    - id: 8
+      value: 0
+    - id: 2
+      value: 1
+    post:
+    - id: 8
+      value: 1
+  goals:
+  - name: LeaveShop
+    isDefault: 1
+    position: {x: 1572, y: 800.19995}
+    conditions:
+    - id: 8
+      value: 1
+  worldStates:
+  - position: {x: 348, y: 88}
+    isAutoUpdate: 1
+    list:
+    - id: 0
+      value: 0
+    - id: 1
+      value: 0
+    - id: 2
+      value: 0
+    - id: 3
+      value: 0
+    - id: 4
+      value: 0
+    - id: 5
+      value: 0
+    - id: 6
+      value: 0
+    - id: 7
+      value: 0
